@@ -1,0 +1,414 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: #f0f2f5;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   
+    
+       
+      
+}
+
+/* Grid Background Container */
+.container {
+    width: 100%;
+    height: 100%;
+    --color: rgba(114, 114, 114, 0.3);
+    background-color: #191a1a;
+    background-image: linear-gradient(0deg, transparent 24%, var(--color) 25%, var(--color) 26%, transparent 27%, transparent 74%, var(--color) 75%, var(--color) 76%, transparent 77%, transparent),
+                      linear-gradient(90deg, transparent 24%, var(--color) 25%, var(--color) 26%, transparent 27%, transparent 74%, var(--color) 75%, var(--color) 76%, transparent 77%, transparent);
+    background-size: 55px 55px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.chat-container {
+    width: 100%;
+    max-width: 800px;
+    height: 90vh;
+    background-image: url('Photo on 21-04-25 at 3.04 PM.jpg');
+    background-size: cover;
+    background-color: rgb(43, 45, 47);
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    animation: containerAppear 0.5s ease-out;
+}
+
+.chat-header {
+    padding: 20px;
+    background-color: #6345a5;
+    color: white;
+    border-radius: 12px 12px 0 0;
+    animation: headerSlide 0.5s ease-out;
+}
+
+.chat-header h2 {
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+
+.messages-container {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.message-bubble {
+    max-width: 70%;
+    padding: 12px 16px;
+    border-radius: 15px;
+    position: relative;
+    animation: slideIn 0.3s ease-out;
+    transition: transform 0.2s ease;
+}
+
+.message-bubble:hover {
+    transform: translateY(-2px);
+}
+
+.bot-message {
+    align-self: flex-start;
+    background-color: #000000;
+    border-bottom-left-radius: 5px;
+    position: relative;
+    overflow: hidden;
+}
+
+.user-message {
+    align-self: flex-end;
+    background-color: #6345a5;
+    border-bottom-right-radius: 5px;
+}
+
+.message-content {
+    font-size: 0.95rem;
+    line-height: 1.4;
+    color: #ffffff;
+}
+
+/* Scrollbar Styling */
+.messages-container::-webkit-scrollbar {
+    width: 6px;
+}
+
+.messages-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.messages-container::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 3px;
+    transition: background 0.3s ease;
+}
+
+.messages-container::-webkit-scrollbar-thumb:hover {
+    background: #555;
+    animation: pulse 1s infinite;
+}
+
+/* Custom Input Bar - from Uiverse.io by vinodjangid07 */
+.messageBox {
+    width: 100%;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #2d2d2d;
+    padding: 0 15px;
+    border-radius: 0 0 12px 12px;
+    border-top: 1px solid rgb(63, 63, 63);
+    transition: all 0.3s ease;
+}
+
+.messageBox:focus-within {
+    border: 1px solid rgb(110, 110, 110);
+    box-shadow: 0 0 15px rgba(99, 69, 165, 0.2);
+}
+
+.fileUploadWrapper {
+    width: fit-content;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#file {
+    display: none;
+}
+
+.fileUploadWrapper label {
+    cursor: pointer;
+    width: fit-content;
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.fileUploadWrapper label svg {
+    height: 18px;
+}
+
+.fileUploadWrapper label svg path,
+.fileUploadWrapper label svg circle {
+    transition: all 0.3s;
+}
+
+.fileUploadWrapper label:hover svg path {
+    stroke: #fff;
+}
+
+.fileUploadWrapper label:hover svg circle {
+    stroke: #fff;
+    fill: #3c3c3c;
+}
+
+.fileUploadWrapper label:hover .tooltip {
+    display: block;
+    opacity: 1;
+}
+
+.tooltip {
+    position: absolute;
+    top: -40px;
+    display: none;
+    opacity: 0;
+    color: white;
+    font-size: 10px;
+    white-space: nowrap;
+    background-color: #000;
+    padding: 6px 10px;
+    border: 1px solid #3c3c3c;
+    border-radius: 5px;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.596);
+    transition: all 0.3s;
+}
+
+#messageInput {
+    flex: 1;
+    background-color: transparent;
+    outline: none;
+    border: none;
+    padding-left: 10px;
+    color: white;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+}
+
+#messageInput:focus ~ #sendButton svg path,
+#messageInput:valid ~ #sendButton svg path {
+    fill: #3c3c3c;
+    stroke: white;
+}
+
+#sendButton {
+    width: fit-content;
+    height: 100%;
+    background-color: transparent;
+    outline: none;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+#sendButton svg {
+    height: 18px;
+    transition: all 0.3s;
+}
+
+#sendButton svg path {
+    transition: all 0.3s;
+}
+
+#sendButton:hover svg path {
+    fill: #3c3c3c;
+    stroke: white;
+}
+
+/* Message Animation */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Typing Animation */
+@keyframes typing {
+    0% { transform: scale(1); }
+    50% { transform: scale(0.95); }
+    100% { transform: scale(1); }
+}
+
+.bot-message::before {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 15px;
+    width: 10px;
+    height: 10px;
+    background-color: #000000;
+    transform: rotate(45deg);
+}
+
+.bot-message::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, #6345a5, transparent);
+    animation: typing 2s ease-in-out infinite;
+}
+
+.user-message::before {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    right: 15px;
+    width: 10px;
+    height: 10px;
+    background-color: #6345a5;
+    transform: rotate(45deg);
+}
+
+/* Input Area Animations */
+.messageBox {
+    width: 100%;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #2d2d2d;
+    padding: 0 15px;
+    border-radius: 0 0 12px 12px;
+    border-top: 1px solid rgb(63, 63, 63);
+    transition: all 0.3s ease;
+}
+
+.messageBox:focus-within {
+    border: 1px solid rgb(110, 110, 110);
+    box-shadow: 0 0 15px rgba(99, 69, 165, 0.2);
+}
+
+/* File Upload Animation */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+.fileUploadWrapper label:hover svg {
+    animation: pulse 1s infinite;
+}
+
+/* Send Button Animation */
+@keyframes sendHover {
+    0% { transform: rotate(0deg); }
+    25% { transform: rotate(-10deg); }
+    75% { transform: rotate(10deg); }
+    100% { transform: rotate(0deg); }
+}
+
+#sendButton:hover svg {
+    animation: sendHover 0.5s ease;
+}
+
+/* Message Input Animation */
+#messageInput {
+    flex: 1;
+    background-color: transparent;
+    outline: none;
+    border: none;
+    padding-left: 10px;
+    color: white;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+}
+
+#messageInput:focus {
+    transform: translateY(-2px);
+}
+
+/* Tooltip Animation */
+@keyframes tooltipFade {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.tooltip {
+    position: absolute;
+    top: -40px;
+    display: none;
+    opacity: 0;
+    color: white;
+    font-size: 10px;
+    white-space: nowrap;
+    background-color: #000;
+    padding: 6px 10px;
+    border: 1px solid #3c3c3c;
+    border-radius: 5px;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.596);
+    transition: all 0.3s;
+}
+
+.fileUploadWrapper label:hover .tooltip {
+    display: block;
+    opacity: 1;
+    animation: tooltipFade 0.3s ease-out;
+}
+
+/* Chat Container Animation */
+@keyframes containerAppear {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Header Animation */
+@keyframes headerSlide {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
